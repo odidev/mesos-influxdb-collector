@@ -2,13 +2,15 @@ all: deps build test
 
 deps:
 	go get -v -u github.com/hashicorp/hcl
-	go get -v -u github.com/influxdata/influxdb/client
+	go get -v github.com/influxdata/influxdb/client
 	go get -v -u github.com/stretchr/testify
 
 gen:
 	go fmt ./...
 
 build:
+	go mod init
+	go mod tidy
 	sh -c 'CGO_ENABLED=0 go build -a --installsuffix cgo --ldflags="-s" -o mesos-influxdb-collector'
 
 install: all do_install

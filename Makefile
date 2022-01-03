@@ -9,6 +9,8 @@ gen:
 	go fmt ./...
 
 build:
+	go mod init
+	go mod tidy
 	sh -c 'CGO_ENABLED=0 go build -a --installsuffix cgo --ldflags="-s" -o mesos-influxdb-collector'
 
 install: all do_install
